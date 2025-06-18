@@ -6,19 +6,100 @@
         <title>Digitalización de Imágenes - Grupo 13</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="../static/index.css">
     </head>
     <body>
-        <form action="/upload" method="post">
-            <input type="file" name="image" accept="image/*" required>
-            <button type="submit">Subir Imagen</button>
-        </form>
-        <div class="imagenes">
-            <img src= alt="">
-            <img src="" alt="">
+        <div class="container">
+            <h1>Digitalizar imágenes</h1>
+            
+            <!-- Formulario para subir imagen -->
+            <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+                <input type="file" name="image" accept="image/*" required id="file-input" style="display: none;">
+                <button type="button" class="select-btn" onclick="document.getElementById('file-input').click()">
+                    Seleccionar imagen
+                </button>
+                <button type="submit" class="hidden-submit" id="submit-upload">Subir</button>
+            </form>
+
+            <!-- Contenedores de imágenes -->
+            <div class="imagenes-container">
+                <div class="imagen-box">
+                    <h3>Imagen original</h3>
+                    <div class="imagen-placeholder">
+                        {% if input_image %}
+                            <img src="{{ url_for('static', filename='input.jpg') }}" alt="Imagen original">
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="imagen-box">
+                    <h3>Imagen digitalizada</h3>
+                    <div class="imagen-placeholder">
+                        {% if output_image %}
+                            <img src="{{ url_for('static', filename='output.jpg') }}" alt="Imagen digitalizada">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="resolution">Resolución</label>
+                        <select name="resolution" id="resolution" class="control-input">
+                            <option value="100x100">100x100</option>
+                            <option value="500x500">500x500</option>
+                            <option value="1000x1000">1000x1000</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="bit_depth">Profundidad de bits</label>
+                        <select name="bit_depth" id="bit_depth" class="control-input">
+                            <option value="1">1</option>
+                            <option value="8">8</option>
+                            <option value="24">24</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <form action="/process" method="post" style="display: inline;">
+                        <input type="hidden" name="resolution" id="hidden-resolution" value="100x100">
+                        <input type="hidden" name="bit_depth" id="hidden-bit-depth" value="1">
+                        <button type="submit" class="digitalizar-btn" {% if not input_image %}disabled{% endif %}>
+                            Digitalizar
+                        </button>
+                    </form>
+                    <button type="button" class="limpiar-btn" onclick="window.location.href='/'">
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mensajes flash -->
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+                <div class="flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
         </div>
-        {% for category, message in messages %}
-            <div class="flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
+
+        <script>
+            // Auto-submit cuando se selecciona un archivo
+            document.getElementById('file-input').addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    document.getElementById('submit-upload').click();
+                }
+            });
+
+            // Sincronizar los valores de los selects con los campos ocultos
+            document.getElementById('resolution').addEventListener('change', function() {
+                document.getElementById('hidden-resolution').value = this.value;
+            });
+
+            document.getElementById('bit_depth').addEventListener('change', function() {
+                document.getElementById('hidden-bit-depth').value = this.value;
+            });
+        </script>
     </body>
 </html>

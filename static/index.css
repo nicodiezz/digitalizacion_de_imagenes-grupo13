@@ -1,0 +1,253 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* Formulario de subida */
+.upload-form {
+  margin-bottom: 40px;
+}
+
+.select-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.select-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.hidden-submit {
+  display: none;
+}
+
+/* Contenedores de imágenes */
+.imagenes-container {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.imagen-box {
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+}
+
+.imagen-box h3 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.imagen-placeholder {
+  background: white;
+  border-radius: 12px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.imagen-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Sección de controles - SIEMPRE VISIBLE */
+.controls-section {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.controls {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.control-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #333;
+  min-width: 120px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.control-input:focus {
+  outline: none;
+  background: white;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.control-input:hover {
+  background: white;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.digitalizar-btn,
+.limpiar-btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.digitalizar-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.digitalizar-btn:hover:not(:disabled) {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.digitalizar-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.limpiar-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.limpiar-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Mensajes flash */
+.flash-error {
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+}
+
+.flash-success {
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+}
+
+.flash-info {
+  background: rgba(33, 150, 243, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .imagenes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .digitalizar-btn,
+  .limpiar-btn {
+    width: 200px;
+  }
+}
