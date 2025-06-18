@@ -74,15 +74,16 @@
                     </form>
 
                     <form action="/compress" method="post" style="display: inline;">
-                        <button type="submit" class="comprimir-btn" {% if not output_image %}disabled{% endif %}>
+                        <button type="submit" class="comprimir-btn" {% if not input_image %}disabled{% endif %}>
                             Comprimir Imagen
                         </button>
                     </form>
 
-                    <button type="button" class="limpiar-btn" onclick="window.location.href='/'">
-                        Limpiar
-                    </button>
-
+                    <form action="/clear" method="post" style="display: inline;">
+                        <button type="submit" class="limpiar-btn" {% if not input_image %}disabled{% endif %}>
+                            Limpiar
+                        </button>
+                    </form>
                 </div>
 
                 

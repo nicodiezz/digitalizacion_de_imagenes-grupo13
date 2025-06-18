@@ -1,2 +1,4 @@
 .venv/
 static/output/
+static/input.jpg
+static/output.jpg

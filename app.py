@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash, get_flashed_messages
+from flask import Flask, request, render_template, flash, get_flashed_messages, send_file, redirect, url_for
 from PIL import Image
 import os
 
@@ -49,38 +49,48 @@ def process():
         return render_template("index.html", input_image=True, output_image=False)
 
     img = Image.open(INPUT_PATH)
-
     width, height = map(int, resolution.split('x'))
     img = img.resize((width, height), Image.LANCZOS)
 
     if bit_depth == 1:
-        img = img.convert("1")  # blanco y negro
+        img = img.convert("1")
     elif bit_depth == 8:
-        img = img.convert("L")  # escala de grises
+        img = img.convert("L")
     elif bit_depth == 24:
-        img = img.convert("RGB")  # color completo
+        img = img.convert("RGB")
 
     img.save(OUTPUT_PATH, format="JPEG", quality=70)
 
     flash("Imagen digitalizada exitosamente", "success")
     return render_template("index.html", input_image=True, output_image=True)
 
-
 @app.route("/compress", methods=["POST"])
 def compress():
-    if not os.path.exists(OUTPUT_PATH):
-        flash("Primero digitalizá una imagen para comprimir", "error")
-        return render_template("index.html", input_image=os.path.exists(INPUT_PATH), output_image=False)
+    if not os.path.exists(INPUT_PATH):
+        flash("Primero subí una imagen para comprimir", "error")
+        return render_template("index.html", input_image=False, output_image=False)
 
-    # Abrir imagen digitalizada
-    img = Image.open(OUTPUT_PATH)
-
-    # Guardar con mayor compresión (calidad menor, ej: 40)
+    img = Image.open(INPUT_PATH)
     img.save(OUTPUT_PATH, format="JPEG", quality=40)
 
-    flash("Imagen comprimida correctamente", "success")
-    return render_template("index.html", input_image=os.path.exists(INPUT_PATH), output_image=True)
+    return redirect(url_for("download"))
 
+@app.route("/download", methods=["GET"])
+def download():
+    if not os.path.exists(OUTPUT_PATH):
+        flash("No hay imagen para descargar", "error")
+        return render_template("index.html", input_image=os.path.exists(INPUT_PATH), output_image=False)
+
+    return send_file(OUTPUT_PATH, as_attachment=True, download_name="imagen_comprimida.jpg")
+
+@app.route("/clear", methods=["POST"])
+def clear():
+    if os.path.exists(INPUT_PATH):
+        os.remove(INPUT_PATH)
+    if os.path.exists(OUTPUT_PATH):
+        os.remove(OUTPUT_PATH)
+    flash("Imágenes eliminadas correctamente", "success")
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True)
