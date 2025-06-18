@@ -72,10 +72,20 @@
                             Digitalizar
                         </button>
                     </form>
+
+                    <form action="/compress" method="post" style="display: inline;">
+                        <button type="submit" class="comprimir-btn" {% if not output_image %}disabled{% endif %}>
+                            Comprimir Imagen
+                        </button>
+                    </form>
+
                     <button type="button" class="limpiar-btn" onclick="window.location.href='/'">
                         Limpiar
                     </button>
+
                 </div>
+
+                
             </div>
 
             <!-- Mensajes flash -->

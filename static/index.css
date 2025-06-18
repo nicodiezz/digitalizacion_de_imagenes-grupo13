@@ -152,7 +152,8 @@ h1 {
 }
 
 .digitalizar-btn,
-.limpiar-btn {
+.limpiar-btn,
+.comprimir-btn {
   padding: 12px 25px;
   border: none;
   border-radius: 8px;
@@ -162,9 +163,15 @@ h1 {
   font-weight: 500;
 }
 
-.digitalizar-btn {
+.digitalizar-btn, .comprimir-btn  {
   background: #4caf50;
   color: white;
+}
+
+.comprimir-btn:hover:not(:disabled) {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
 .digitalizar-btn:hover:not(:disabled) {
@@ -179,11 +186,17 @@ h1 {
   opacity: 0.6;
 }
 
-.limpiar-btn {
+.limpiar-btn{
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
+
+.comprimir-btn:hover{
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
 
 .limpiar-btn:hover {
   background: rgba(255, 255, 255, 0.3);
